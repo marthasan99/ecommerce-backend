@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const otpTemplate = require("../helpers/otpTemplate.js");
 const sendEmail = require("../helpers/sendEmail.js");
 const aleaRNGFactory = require("number-generator/lib/aleaRNGFactory");
+const nodemailer = require("nodemailer");
 
 let registrationController = async (req, res) => {
   const { fullName, email, password, avatar, facebookId, linkedinId } =
@@ -47,7 +48,21 @@ let registrationController = async (req, res) => {
         { new: true }
       );
 
-      sendEmail(email, randomOtpStore.randomOtp, otpTemplate);
+      // sendEmail(email, randomOtpStore.randomOtp, otpTemplate);
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "mart.hasan94@gmail.com",
+          pass: "wzwrmnnjjhlsfyui",
+        },
+      });
+
+      let info = await transporter.sendMail({
+        from: "mart.hasan94@gmail.com",
+        to: email,
+        subject: "Please verify your email",
+        html: otpTemplate(randomOtpStore.randomOtp),
+      });
 
       // setTimeout(async function () {
       //   let randomOtpStore = await User.findOneAndUpdate(

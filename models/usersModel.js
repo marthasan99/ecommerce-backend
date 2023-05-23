@@ -45,6 +45,9 @@ const userSchema = new Schema({
   linkedinID: {
     type: String,
   },
+  randomOtp: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

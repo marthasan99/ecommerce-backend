@@ -53,7 +53,7 @@ let registrationController = async (req, res) => {
         service: "gmail",
         auth: {
           user: "mart.hasan94@gmail.com",
-          pass: "otqxzomcvucvcawp",
+          pass: "ciuoyjlkvorofldj",
         },
       });
 

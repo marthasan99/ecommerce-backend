@@ -53,7 +53,7 @@ let registrationController = async (req, res) => {
         service: "gmail",
         auth: {
           user: "mart.hasan94@gmail.com",
-          pass: "wzwrmnnjjhlsfyui",
+          pass: "otqxzomcvucvcawp",
         },
       });
 
@@ -61,7 +61,7 @@ let registrationController = async (req, res) => {
         from: "mart.hasan94@gmail.com",
         to: email,
         subject: "Please verify your email",
-        html: otpTemplate(randomOtpStore.randomOtp),
+        html: otpTemplate(randomNumber),
       });
 
       // setTimeout(async function () {

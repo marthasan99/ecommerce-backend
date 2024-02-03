@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 function dbConnection() {
-  mongoose.connect(process.env.DB_URL).then(() => console.log("Connected!"));
+  mongoose
+    .connect(
+      "mongodb+srv://marthasan:ascfasfdsgdsdhb@cluster0.ovu5nu1.mongodb.net/orebi?retryWrites=true&w=majority"
+    )
+    .then(() => console.log("Connected!"));
 }
 
 module.exports = dbConnection;

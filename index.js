@@ -15,7 +15,9 @@ app.use(routes);
 //   res.send("Hello World");
 // });
 
-app.listen(8000);
+app.listen(8000, () => {
+  console.log("Server Is Running");
+});
 
 //mongodb+srv://marthasan94:<password>@cluster0.dcs87uf.mongodb.net/?retryWrites=true&w=majority
 

@@ -1,4 +1,5 @@
 const Category = require("../models/categoryModel.js");
+const SubCategory = require("../models/subcategoryModel.js");
 
 async function categoryController(req, res) {
   const { name, description } = req.body;
@@ -38,4 +39,56 @@ async function categoryStatusController(req, res) {
   }
 }
 
-module.exports = { categoryController, categoryStatusController };
+async function subCategoryController(req, res) {
+  const { name, description, categoryId } = req.body;
+
+  let duplicateSubCategory = await SubCategory.find({ name });
+  if (duplicateSubCategory.length > 0) {
+    return res.send({ error: "Subcategory already exist, Try another" });
+  }
+
+  let subcategory = new SubCategory({
+    name,
+    description,
+    categoryId,
+  });
+  subcategory.save();
+
+  console.log(subcategory._id);
+  let updateCategory = await Category.findOneAndUpdate(
+    { _id: subcategory.categoryId },
+    { $push: { subCategory: subcategory._id } },
+    { new: true }
+  );
+
+  res.send({
+    success: "Subcategory Created Successfully",
+  });
+}
+
+async function subCategoryStatusController(req, res) {
+  const { name, status } = req.body;
+  console.log(name, status);
+  if (status == "rejected" || status == "waiting") {
+    let updateCategory = await SubCategory.findOneAndUpdate(
+      { name },
+      { $set: { isActive: false, status } },
+      { new: true }
+    );
+    return res.send({ success: "Status Updated" });
+  } else if (status == "approved") {
+    let updateCategory = await SubCategory.findOneAndUpdate(
+      { name },
+      { $set: { isActive: true, status } },
+      { new: true }
+    );
+    return res.send({ success: "Status Updated" });
+  }
+}
+
+module.exports = {
+  categoryController,
+  categoryStatusController,
+  subCategoryController,
+  subCategoryStatusController,
+};

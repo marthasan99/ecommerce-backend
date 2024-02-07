@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 
 const subCategorySchema = new Schema({
   name: {
-    type: string,
+    type: String,
     required: true,
   },
   description: {
-    type: string,
+    type: String,
   },
   isActive: {
     type: Boolean,
@@ -19,7 +19,7 @@ const subCategorySchema = new Schema({
     default: "waiting",
     enum: ["waiting", "approved", "rejected"],
   },
-  category: {
+  categoryId: {
     type: Schema.Types.ObjectId,
     ref: "Category",
   },

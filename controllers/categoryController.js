@@ -57,7 +57,7 @@ async function subCategoryController(req, res) {
   console.log(subcategory._id);
   let updateCategory = await Category.findOneAndUpdate(
     { _id: subcategory.categoryId },
-    { $push: { subCategory: subcategory._id } },
+    { $push: { subcategory: subcategory._id } },
     { new: true }
   );
 
@@ -86,9 +86,20 @@ async function subCategoryStatusController(req, res) {
   }
 }
 
+async function getAllCategory(req, res) {
+  const data = await Category.find({}).populate("subcategory");
+  res.send(data);
+}
+async function getAllSubCategory(req, res) {
+  const data = await SubCategory.find({}).populate("categoryId");
+  res.send(data);
+}
+
 module.exports = {
   categoryController,
   categoryStatusController,
   subCategoryController,
   subCategoryStatusController,
+  getAllCategory,
+  getAllSubCategory,
 };
